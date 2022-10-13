@@ -1,6 +1,3 @@
-from calendar import day_name
-from turtle import left
-
 
 def merge_sort(data):
 

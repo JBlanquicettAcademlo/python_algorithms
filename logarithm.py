@@ -8,8 +8,6 @@
 
 #O(log n) logaritmica
 
-from turtle import right
-
 
 def binary_search(data:list, value):
     

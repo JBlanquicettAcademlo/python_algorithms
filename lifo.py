@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from re import M
 
 @dataclass
 class Stack:
 
     items = []
 
-    def push(self, item):
+    def push(self, item):       
         self.items.append(item)
     
     def top(self):
