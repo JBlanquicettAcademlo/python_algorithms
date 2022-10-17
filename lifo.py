@@ -22,21 +22,45 @@ class Stack:
     
     def size(self):
         return len(self.items)
+    
+    def sorted_insert(self, key):
+
+        if not self.items or key > self.items[-1]:
+            self.items.append(key)
+            return
+        
+        top = self.items.pop()
+
+        self.sorted_insert(key)
+        self.items.append(top)
+
+
+    def sort_stack(self):
+
+        if not self.items:
+            return
+        
+        top = self.items.pop()
+        self.sort_stack()
+        self.sorted_insert(top)
 
 
 my_custom_stack = Stack()
 
-my_custom_stack.push(1)
-my_custom_stack.push(2)
+my_custom_stack.push(5)
+my_custom_stack.push(-2)
+my_custom_stack.push(9)
+my_custom_stack.push(7)
 my_custom_stack.push(3)
-my_custom_stack.push('Ho')
-my_custom_stack.push('la')
 
+print(my_custom_stack.items)
+my_custom_stack.sort_stack()
+print(my_custom_stack.items)
 
+# 3 -> [-2, 5, 7, 9] -> [-2, 5, 7] -> [-2, 5] -> [-2, 3] -> [-2, 3, 5] -> [-2, 3, 5, 7] 
+# .. -> [-2, 3, 5, 7, 9]
 
-# print(my_custom_stack.top())
-# print(my_custom_stack.top())
-# print(my_custom_stack.top())
-
-while not my_custom_stack.is_empty():
-    print(my_custom_stack.pop())
+# 7 -> [-2, 5, 9] -> [-2, 5] -> [-2, 5, 7, 9]
+# 9 -> [-2, 5] -> [-2, 5, 9]
+# -2 -> [5] -> [] -> [-2, 5]
+# 5 -> [] -> [5]
