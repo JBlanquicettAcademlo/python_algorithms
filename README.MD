@@ -48,7 +48,13 @@ except KeyboardInterrupt:
     print('\n')
 ```
 
-## Knowing the position of things on the screen
+## .env file
+All real projects use an .env variable with information that you would not be willing to have exposed, don't lag behind, but if this becomes a problem, hardcode the main.py.
+
+```env
+BASE_PATH=/YOUR/PATH/TO/DOWNLOAD/STAGE
+```
+## List files in your chosen bucket
 
 ```python
 import os
