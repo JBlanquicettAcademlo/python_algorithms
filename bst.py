@@ -1,73 +1,103 @@
+class Node:
 
-
-class Tree:
-
-    def __init__(self, key) -> None:
+    def __init__(self, key):
         
-        self.val = key
+        self.key = key
         self.left = None
         self.right = None
 
+    def __str__(self):
+        return f'Node[{self.key}]'
 
-def insert(root, key):
+
+def insert(node, key):
+
+    if node is None:
+        return Node(key)
+
+    if key < node.key:
+        node.left = insert(node.left, key)
+
+    else:
+        node.right = insert(node.right, key)
+
+    return node
+
+
+def search(node, key):
+
+    if node is None:
+        return node
+
+    if key == node.key:
+        return node
+
+    if key > node.key:
+        return search(node.right, key)
+
+    if key < node.key:
+        return search(node.left, key)
+
+def min_value_node(node):
+    current = node
+    while current.left is not None:
+        current=current.left
+    return current
+
+def max_value_node(node):
+    current = node
+    while current.right is not None:
+        current=current.right
+    return current
+
+def delete_node(root, key):
 
     if root is None:
-        return Tree(key)
-    
-    else:
-        if root.val == key:
-            return root
-        elif root.val < key:
-            root.right = insert(root.right, key)
-        else:
-            root.left = insert(root.left, key)
-    
-    return root
-
-def preorder(root):
-    
-    if root:
-        print(root.val)
-        preorder(root.left)
-        preorder(root.right)
-
-
-def inorder(root):
-    
-    if root:
-        inorder(root.left)
-        print(root.val)
-        inorder(root.right)
-
-
-def postorder(root):
-    
-    if root:
-        postorder(root.left)
-        postorder(root.right)
-        print(root.val)
-
-def search(root, key):
-
-    if root is None or root.val==key:
         return root
 
-    if root.val < key:
-        return search(root.right, key)
-    
-    return search(root.left, key)
+    if key < root.key:
+        root.left = delete_node(root.left, key)
 
-root = Tree(50)
+    elif key > root.key:
+        root.right = delete_node(root.right, key)
 
-root = insert(root, 30)
-root = insert(root, 20)
-root = insert(root, 40)
-root = insert(root, 70)
-root = insert(root, 60)
-root = insert(root, 80)
+    else:
+        if root.left is None:
+            temp = root.right
+            root = None
+            return temp
 
-# inorder(root)
-# preorder(root)
-# postorder(root)
+        elif root.right is None:
+            temp = root.left
+            root = None
+            return temp
 
-print(search(root, 81) is not None)
+        temp = min_value_node(root.right)
+        root.key = temp.key
+
+        root.right = delete_node(root.right, temp.key)
+
+    return root
+
+
+root = None
+root = insert(root, 12)
+root = insert(root, 23)
+root = insert(root, 9)
+root = insert(root, 10)
+
+# print(min_value_node(root))
+# print(max_value_node(root))
+
+ok=search(root, 9)
+print(ok)
+root=delete_node(root, 9)
+ok=search(root, 9)
+print(ok)
+
+ok=search(root, 10)
+print(ok)
+ok=search(root, 23)
+print(ok)
+ok=search(root, 12)
+print(ok)
